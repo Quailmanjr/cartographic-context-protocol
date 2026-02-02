@@ -99,7 +99,7 @@ class Cartographer:
             self.update_directory(dirpath)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="CCP Auto-Cartographer v1.2.2")
+    parser = argparse.ArgumentParser(description="CCP Auto-Cartographer v1.3.2")
     parser.add_argument("path", nargs="?", default=os.getcwd(), help="Path to the repository root")
     args = parser.parse_args()
     
