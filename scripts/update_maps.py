@@ -14,8 +14,8 @@ logger = logging.getLogger("CCP-Cartographer")
 class Cartographer:
     """Handles the maintenance of LEGEND.md files within a CCP-compliant repository."""
     
-    START_MARKER = "<!-- CCP-START -->"
-    END_MARKER = "<!-- CCP-END -->"
+    START_MARKER = "<!-- CCP_INVENTORY_START -->"
+    END_MARKER = "<!-- CCP_INVENTORY_END -->"
     IGNORED_DIRS = {".git", "node_modules", "dist", "build", ".next", "venv", ".venv"}
 
     def __init__(self, root_dir):
@@ -106,4 +106,4 @@ if __name__ == "__main__":
     cartographer = Cartographer(args.path)
     logger.info("🗺️ Starting CCP Map Synchronization...")
     cartographer.run()
-    logger.info("✨ Synchronisation Complete.")
+    logger.info("✨ Synchronization Complete.")
