@@ -6,8 +6,8 @@ IGNORED_DIRS = {
     "coverage", "__pycache__", "venv", ".venv"
 }
 
-START = ""
-END = ""
+START = "<!-- CCP_INVENTORY_START -->"
+END = "<!-- CCP_INVENTORY_END -->"
 
 def list_files(directory):
     return sorted([
