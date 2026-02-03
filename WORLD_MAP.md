@@ -15,9 +15,14 @@
 * **Key Artifacts:** `install_ccp.py`, `update_maps.py`
 * **Access Rules:** Execute with appropriate permissions, modifies target repositories
 
+### `/archive`
+* **Responsibility:** Storage for one-off scripts, logs, and analysis files from completed tasks
+* **Key Artifacts:** Organized by type (logs/, scripts/, sql/, analysis/)
+* **Access Rules:** Read-only historical record, files never deleted
+
 ### `/docs` (Implicit)
 * **Responsibility:** Documentation files including protocol specifications and guides
-* **Key Artifacts:** `README.md`, `SYSTEM_PROMPT.md`, `CONTEXT.md`, `RELEASE_NOTES_*.md`, `CCP_CASE_STUDY.md`
+* **Key Artifacts:** `README.md`, `SYSTEM_PROMPT.md`, `PROTOCOLS.md`, `CONTEXT.md`, `RELEASE_NOTES_*.md`, `CCP_CASE_STUDY.md`
 * **Access Rules:** Read-only for reference, update when protocol changes
 
 ## 🧭 CRITICAL PATHS

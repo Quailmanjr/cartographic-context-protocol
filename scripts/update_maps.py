@@ -37,14 +37,15 @@ class Cartographer:
     def parse_existing_legend(self, text, current_files):
         """Extracts existing descriptions from the Legend to prevent overwriting human work."""
         existing_meta = {}
-        # Regex to find: | `filename` | Purpose | Dependencies |
-        pattern = r"\|\s*`([^`]+)`\s*\|\s*([^|]+)\|\s*([^|]+)\|"
-        rows = re.findall(pattern, text)
+        # Regex to find: | `filename` | Purpose | (supports both 2 and 3 column formats)
+        # Try 2-column format first (minimal standard)
+        pattern_2col = r"\|\s*`([^`]+)`\s*\|\s*([^|]+)\|"
+        rows = re.findall(pattern_2col, text)
         
-        for name, purpose, deps in rows:
+        for name, purpose in rows:
             clean_name = name.strip()
             if clean_name in current_files:
-                existing_meta[clean_name] = (purpose.strip(), deps.strip())
+                existing_meta[clean_name] = purpose.strip()
         return existing_meta
 
     def update_directory(self, directory):
@@ -71,13 +72,17 @@ class Cartographer:
             
             new_rows = []
             for f in files:
-                purpose, deps = meta.get(f, ("📝 TODO: Describe responsibility", "*Auto-detected*"))
-                new_rows.append(f"| `{f}` | {purpose} | {deps} |")
+                # Per PROTOCOLS.md: per-file purposes are optional
+                purpose = meta.get(f, "Optional")
+                # Normalize empty or TODO purposes to "Optional"
+                if not purpose or "TODO" in purpose:
+                    purpose = "Optional"
+                new_rows.append(f"| `{f}` | {purpose} |")
 
             inventory_table = "\n".join([
                 self.START_MARKER,
-                "| File | Purpose | Dependencies |",
-                "| :--- | :--- | :--- |",
+                "| File | Purpose |",
+                "| :--- | :--- |",
                 *new_rows,
                 self.END_MARKER
             ])
@@ -99,7 +104,7 @@ class Cartographer:
             self.update_directory(dirpath)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="CCP Auto-Cartographer v1.3.2")
+    parser = argparse.ArgumentParser(description="CCP Auto-Cartographer v1.3.3")
     parser.add_argument("path", nargs="?", default=os.getcwd(), help="Path to the repository root")
     args = parser.parse_args()
     

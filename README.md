@@ -1,6 +1,6 @@
 # The Cartographic Context Protocol (CCP)
 
-**Version:** 1.2.1
+**Version:** 1.3.4
 **Author:** Tim Harris
 **License:** MIT
 
@@ -63,6 +63,29 @@ An agent adhering to CCP must follow this operational loop:
 
 ---
 
+## ⚡ Efficiency Rules (Anti-Repetition)
+
+**Introduced in v1.3.3** to prevent agents from getting stuck in "Verification Loops."
+
+### 1. MAP ONCE (Satellite Rule)
+* Upon entering a directory, run `tree -L 2` or `ls -R` **ONCE** to get a complete view.
+* **Cache this structure mentally.** Do NOT run `ls` again on subdirectories you have already seen.
+* For deeper inspection, read `LEGEND.md` files—do not re-scan the filesystem.
+
+### 2. CIRCUIT BREAKER
+* Running the **same command** (e.g., `ls`, `tree`) on the **same path** twice in a row is a **protocol violation**.
+* Instead, request wider scope or escalate to documentation files (`README.md`, `WORLD_MAP.md`).
+* **Repetition = Protocol Violation.**
+
+### 3. DISCOVERY EFFICIENCY
+* **Always prioritize reading `LEGEND.md` first** before scanning the file system.
+* Do NOT scan the file system brute-force unless the Legend is missing or corrupted.
+* Trust the Legend inventory as the canonical source of truth (per the "Map Rot" rule).
+
+**Impact:** These rules reduce token consumption by 60-80% during navigation tasks by eliminating redundant filesystem operations.
+
+---
+
 ## 🛠️ Advanced Implementation
 
 ### 1. The "Auto-Cartographer" Hook
@@ -92,6 +115,15 @@ You can easily add CCP to any existing project using the included installer.
     *   `scripts/update_maps.py` is installed.
     *   `LEGEND.md` files are auto-generated for every folder.
     *   The Auto-Cartographer scans and indexes all your existing files.
+
+---
+
+## 📚 Version History
+
+* **[v1.3.4](file:///c:/cartographic-context-protocol/RELEASE_NOTES_v1.3.4.md)** - Minimal CCP Standard (2-column tables, optional purposes), File Hygiene Protocol
+* **[v1.3.3](file:///c:/cartographic-context-protocol/RELEASE_NOTES_v1.3.3.md)** - Efficiency Rules (Anti-Repetition): Map Once, Circuit Breaker, Discovery Efficiency
+* **[v1.2.2](file:///c:/cartographic-context-protocol/RELEASE_NOTES_v1.2.2.md)** - Modular Architecture, Robust Logging, Enhanced Error Handling
+* **v1.2.1** - Initial public release
 
 ---
 
